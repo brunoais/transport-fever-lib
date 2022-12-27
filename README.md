@@ -1,52 +1,32 @@
-# Library set for Transport Fever 2
+# Library set for LUA scripts
 
-This is just a set of scripts that work together as a library.
+This library is can be used on any mods that use LUA. Initially done for transport fever 2 but it's generic enough that you can adapt to any other plugin system that works on LUA. The mods that depend on it will load the modules they need.
 
-They are expected to be placed inside a `lib/` directory which is placed at the `res/scripts`of your project.
-In other words, it's supposed to be at `res/scripts/lib`. Potentially, as a git submodule.
+Until version 1.0, don't expect backwards or forwards compatibility.
 
-# Installation
+# Use
 
-## Option 1: Steam workshop
+Just import the modules as you need relative to the `tes/scripts` directory.
 
-https://steamcommunity.com/sharedfiles/filedetails/?id=2775765248
+Basically that means all scripts are prefixed with `brunoais.` followed by their name. E.g.:
 
-## Option 2: Manual
+1. `brunoais.modules`
+2. `brunoais.ui.navigation`
 
-#### Download the files
+Which are required in code like so:
 
-If you don't know how, you can download the files by:
-
-1. Press the green "Code" button
-2. Press "Download Zip"
-3. Unzip to a directory of your choice
-4. Copy the unzipped files to the directory explained in the next section
+```
+local modules = include "brunoais.modules"
+local uiNavigation = include "brunoais.ui.navigation"
+```
 
 
-### Place the files in the right place
+# Requiring to users
 
-Copy the files from the mod to inside `[userdata]/mods/transport_fever_event_log_1`. If the directory doesn't exist, create it.
+In order to use the library, just make it a mod requirement on steam or, if another platform, warn users it's a mod requirement.
 
-To know where `[userdata]` is located, you can find that through:
-
-* Inside TF2 game ->
-* "settings" menu ->
-* "Advanced" tab ->
-* "OPEN USERDATA FOLDER" button
-
-It will open your file explorer with the relevant userdata directory
-
-
-If in `[userdata]/mods/transport_fever_event_log_1` there's the files `mod.lua` and `strings.lua`, then the copy is successful.
-Otherwise, you may need to move the contents of the only directory there (possibly called `brunoais_Transport-fever-event-log`) out of the directory and try again.
-
-# Settings
-
-This mod doesn't have in-game settings. Instead, the settings are represented in the files at `[userdata]/mods/transport_fever_event_log_1/res/scripts/devConfig/`
-
-The explanation on how to edit them to your use are included as lua comments.  
-Also, consider the files already included in this repo as examples.
-
+# Acknowledgements
+This product includes "module reload", developed by brunoais, available at https://github.com/brunoais/lua-module-reload.
 
 # License
 

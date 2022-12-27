@@ -14,19 +14,19 @@
 	limitations under the License.
 ]]
 
-local modules = require "modules"
+local modules = require "lib.brunoais.modules"
 
-modules.tryRequire("lib.extensions.table")
-local metatables = modules.tryRequire("lib.metatables")
+modules.tryRequire("lib.brunoais.extensions.table")
+local metatables = modules.tryRequire("lib.brunoais.metatables")
 
 
 local uiNavigation = {}
 
-local function _get1OfElementsByNames(atLevel, names, found)
+local function getElementPerNameByNames(atLevel, names, found)
 
 	local layout = (atLevel.getLayout and atLevel:getLayout()) or atLevel
 	if layout.getNumItems == nil then
-		print("Give up", toString(atLevel), toString(layout), toString(atLevel:getLayout()))
+		-- print("Give up", toString(atLevel), toString(layout), toString(atLevel:getLayout()))
 		return false
 	end
 
@@ -44,11 +44,7 @@ local function _get1OfElementsByNames(atLevel, names, found)
 				table.insert(found[name], item)
 			end
 
-			print("Before call", toString(name))
-
-			if _get1OfElementsByNames(item, names, found) then
-				return true
-			end
+			getElementPerNameByNames(item, names, found)
 		end
 	end
 
@@ -60,17 +56,17 @@ local function _get1OfElementsByNames(atLevel, names, found)
 
 end
 
-function uiNavigation.get1OfElementsByNames(atLevel, ...)
+function uiNavigation.getElementPerNameByNames(atLevel, ...)
 	local given_names = {...}
-	local names = setmetatable({}, metatables.defaultTable(0))
 	local found = setmetatable({}, metatables.defaultTable({}))
 
+	local names = setmetatable({}, metatables.defaultTable(0))
 	for n, name in ipairs(given_names) do
 		names[name] = names[name] + 1
 	end
 	setmetatable(names, {})
 
-	_get1OfElementsByNames(atLevel, names, found)
+	getElementPerNameByNames(atLevel, names, found)
 
 	return found
 end

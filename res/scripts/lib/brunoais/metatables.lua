@@ -23,7 +23,7 @@ function metatables.defaultTable(_defaultValue)
 
 	if type(defaultValue) == "table" then
 		defaultValue = function ()
-			return table.shallow_copy(_defaultValue)
+			return table.shallowCopy(_defaultValue)
 		end
 	end
 	if type(defaultValue) ~= "function" then
